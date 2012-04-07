@@ -540,7 +540,7 @@ class Kohana_ORM_REST extends Model
 		if ($key === NULL)
 			return $this->_object;
 			
-		if (isset($this->_object[$key]))
+		if (array_key_exists($key, $this->_object))
 			return $this->_object[$key];
 			
 		if (isset($this->_related[$key]))	

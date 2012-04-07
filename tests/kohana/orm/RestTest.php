@@ -69,7 +69,13 @@ class Kohana_ORM_RestTest extends Unittest_TestCase
 		
 		$this->assertTrue($orm->loaded(), 'Tests model is loaded.');
 		
-		$this->assertSame($orm->label, 'Test 1');		
+		$this->assertSame($orm->label, 'Test 1');	
+
+		// Set null value
+		$orm->label = NULL;
+		
+		// Test null value property
+		$this->assertSame($orm->label, NULL);	
 	}
 	
 	/**
