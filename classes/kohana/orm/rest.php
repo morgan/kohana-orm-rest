@@ -20,7 +20,10 @@ class Kohana_ORM_REST extends Model
 	/**
 	 * Convert path to key/value using convention.
 	 * 
-	 * Campaign_Submission = campaigns/:campaigns_id/submission/:campaigns_submissions_id
+	 * 	// Response: forums/:forums_id/threads/:forums_threads_id/posts
+	 * 	ORM_REST::hash('Forum_Thread_Post');
+	 * 
+	 * Purpose for redundant "forums" within "forums_threads_id" is to ensure unique param.
 	 * 
 	 * @access	public
 	 * @param	string
@@ -87,7 +90,7 @@ class Kohana_ORM_REST extends Model
 	}	
 	
 	/**
-	 * Can specify name of connection which will retrieved when initialized.
+	 * Can specify name of connection which will be retrieved when initialized.
 	 * 
 	 * @access	protected
 	 * @var		mixed	NULL|string
@@ -273,7 +276,15 @@ class Kohana_ORM_REST extends Model
 	protected $_method_delete = Request::DELETE;	
 
 	/**
-	 * Symbol used for variable
+	 * Symbol used to identify variable within the resource name when params are being set. 
+	 * 
+	 * Example:
+	 * 
+	 * 	// Say resource property is set as follows
+	 * 	protected $_resource = 'forums/:forums_id/topics';
+	 * 
+	 * 	// To set param ":forums_id", call:
+	 * 	$this->param('forums_id', 1);
 	 * 
 	 * @access	protected
 	 * @var		string
