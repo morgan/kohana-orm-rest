@@ -28,6 +28,34 @@ class Kohana_ORM_RestTest extends Unittest_TestCase
     }	
 	
 	/**
+	 * Data provider for role resources
+	 *
+	 * @access	public
+	 * @return	array
+	 */
+	public static function provider_hash()
+	{
+		return array
+		(
+			array('Forum', 'forums'),
+			array('Forum_Thread', 'forums/:forums_id/threads'),
+			array('Forum_Thread_Post', 'forums/:forums_id/threads/:forums_threads_id/posts')
+		);
+	}    
+    
+    /**
+     * Tests class to resource pattern
+     * 
+	 * @dataProvider	provider_hash
+     * @access	public
+     * @return	void
+     */
+    public function test_hash($set, $expected)
+    {
+    	$this->assertEquals(ORM_REST::hash($set), $expected);
+    }
+    
+	/**
 	 * Tests request
 	 * 
 	 * @access			public

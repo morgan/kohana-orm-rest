@@ -18,6 +18,75 @@
 class Kohana_ORM_REST extends Model
 {
 	/**
+	 * Convert path to key/value using convention.
+	 * 
+	 * Campaign_Submission = campaigns/:campaigns_id/submission/:campaigns_submissions_id
+	 * 
+	 * @access	public
+	 * @param	string
+	 * @return	string
+	 */
+	public static function hash($uri, $var = ':', $pluralize = TRUE)
+	{
+		$resource = NULL;
+			
+		$segments = explode('_', strtolower($uri));
+		
+		$count = 0;
+		
+		foreach ($segments as $segment)
+		{
+			$key = NULL;
+			
+			for ($i = 0; $i <= $count; $i++)
+			{
+				if ($key)
+				{
+					$key .= '_';
+				}
+				else
+				{
+					$key .= $var;
+				}
+				
+				if ($pluralize)
+				{
+					$key .= Inflector::plural($segments[$i]);
+				}
+				else
+				{
+					$key .= $segments[$i];
+				}
+			}
+			
+			$key .= '_id';
+			
+			if ($resource)
+			{
+				$resource .= '/';
+			}
+			
+			if ($pluralize)
+			{
+				$segment = Inflector::plural($segment);
+			}
+			
+			$count++;
+			
+			if (count($segments) == $count)
+			{
+				$resource .= $segment;
+			}
+			else
+			{
+				$resource .= $segment . '/' . $key;
+			}
+		}
+		
+		return $resource;
+	}	
+	
+	/**
 	 * Can specify name of connection which will retrieved when initialized.
 	 * 
 	 * @access	protected
@@ -32,14 +101,7 @@ class Kohana_ORM_REST extends Model
 	 * @var		mixed	NULL|string
 	 */
 	protected $_resource;
-	
-	// to be overriden
-	protected $_resource_find;
-	protected $_resource_find_all;
-	protected $_resource_create;
-	protected $_resource_update;
-	protected $_resource_delete;
-	
+
 	/**
 	 * Convert singular model name to plural resource name.
 	 * 
@@ -298,7 +360,7 @@ class Kohana_ORM_REST extends Model
 		{
 			if ($this->_resource === NULL)
 			{
-				$this->_resource = $this->hash(strtolower(ltrim(get_class($this), $this->_class_namespace)));
+				$this->_resource = self::hash(ltrim(get_class($this), $this->_class_namespace), $this->_var, $this->_pluralize);
 			}
 			
 			return $this->_resource;	
@@ -636,75 +698,6 @@ class Kohana_ORM_REST extends Model
 			throw new Kohana_Exception('Failed deleting resource with code :code.', array('code' => $response->code()));			
 			
 		return $this->clear();
-	}
-	
-	/**
-	 * Convert path to key/value using convention.
-	 * 
-	 * Campaign_Submission = campaigns/:campaigns_id/submission/:campaigns_submissions_id
-	 * 
-	 * @access	public
-	 * @param	string
-	 * @return	string
-	 */
-	public function hash($uri)
-	{
-		$resource = NULL;
-			
-		$segments = explode('/', $uri);
-		
-		$count = 0;
-		
-		foreach ($segments as $segment)
-		{
-			$key = NULL;
-			
-			for ($i = 0; $i <= $count; $i++)
-			{
-				if ($key)
-				{
-					$key .= '_';
-				}
-				else
-				{
-					$key .= $this->_var;
-				}
-				
-				if ($this->_pluralize)
-				{
-					$key .= Inflector::plural($segments[$i]);
-				}
-				else
-				{
-					$key .= $segments[$i];
-				}
-			}
-			
-			$key .= '_id';
-			
-			if ($resource)
-			{
-				$resource .= '/';
-			}
-			
-			if ($this->_pluralize)
-			{
-				$segment = Inflector::plural($segment);
-			}
-			
-			$count++;
-			
-			if (count($segments) == $count)
-			{
-				$resource .= $segment;
-			}
-			else
-			{
-				$resource .= $segment . '/' . $key;
-			}
-		}
-		
-		return $resource;
 	}
 	
 	/**
