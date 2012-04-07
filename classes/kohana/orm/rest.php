@@ -90,7 +90,7 @@ class Kohana_ORM_REST extends Model
 	}	
 	
 	/**
-	 * Can specify name of connection which will be retrieved when initialized.
+	 * Can specify name of Dispatch connection which will be retrieved when initialized.
 	 * 
 	 * @access	protected
 	 * @var		mixed	NULL|string
@@ -98,7 +98,21 @@ class Kohana_ORM_REST extends Model
 	protected $_connection_name;
 	
 	/**
-	 * Resource URI
+	 * If not defined, ORM_REST::hash is used to generate the resource using the class name along 
+	 * with conventions for generating param keys. If the default conventions don't match the 
+	 * remote service, this property can be defined within the individual model.
+	 * 
+	 * For example, if the resource name is "objects" but requires multiple params, it can be 
+	 * defined as follows:
+	 * 
+	 * 	protected $_resource = 'objects/:var1/:var2';
+	 * 
+	 * 	// Params can be defined as follows:
+	 * 	$this->param('var1', 'example');
+	 * 
+	 * The ability to define the resource along with dynamic parameters creates for a great deal 
+	 * of flexibility. The default conventions do not always match up with all remote REST services; 
+	 * however, defining this property should always allow the model object to map.
 	 * 
 	 * @access	protected
 	 * @var		mixed	NULL|string
@@ -285,7 +299,7 @@ class Kohana_ORM_REST extends Model
 	 * 
 	 * 	// To set param ":forums_id", call:
 	 * 	$this->param('forums_id', 1);
-	 * 
+
 	 * @access	protected
 	 * @var		string
 	 */
@@ -328,6 +342,11 @@ class Kohana_ORM_REST extends Model
 			$this->_resource_name = $name;
 		}
 		
+		if ($this->_resource === NULL)
+		{
+			$this->_resource = self::hash($this->_model_name, $this->_var, $this->_pluralize);	
+		}		
+		
 		if ($id)
 		{
 			$this->set($this->_primary_id, $id);
@@ -359,27 +378,14 @@ class Kohana_ORM_REST extends Model
 	}
 	
 	/**
-	 * Set or get resource path
+	 * Get resource path
 	 * 
 	 * @access	public
-	 * @param	mixed	NULL|string
-	 * @return	mixed	string|$this
+	 * @return	string
 	 */
-	public function resource($resource = NULL)
+	public function resource()
 	{
-		if ($resource === NULL)
-		{
-			if ($this->_resource === NULL)
-			{
-				$this->_resource = self::hash(ltrim(get_class($this), $this->_class_namespace), $this->_var, $this->_pluralize);
-			}
-			
-			return $this->_resource;	
-		}
-		
-		$this->_resource = $resource;
-		
-		return $this;
+		return $this->_resource;
 	}	
 	
 	/**
