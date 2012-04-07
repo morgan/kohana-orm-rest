@@ -52,7 +52,7 @@ class Kohana_ORM_RestTest extends Unittest_TestCase
      */
     public function test_hash($set, $expected)
     {
-    	$this->assertEquals(ORM_REST::hash($set), $expected);
+    	$this->assertEquals(ORM_REST::hash($set, ':', TRUE), $expected);
     }
     
 	/**

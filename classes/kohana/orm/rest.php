@@ -25,11 +25,16 @@ class Kohana_ORM_REST extends Model
 	 * 
 	 * Purpose for redundant "forums" within "forums_threads_id" is to ensure unique param.
 	 * 
+	 * There is no tailing param given that ORM_REST::find appends ORM_REST::$_primary_id named 
+	 * property to the end of the resource.
+	 * 
 	 * @access	public
-	 * @param	string
+	 * @param	string	'Forum_Topic'
+	 * @param	string	':'
+	 * @param	bool	TRUE
 	 * @return	string
 	 */
-	public static function hash($uri, $var = ':', $pluralize = TRUE)
+	public static function hash($uri, $var, $pluralize)
 	{
 		$resource = NULL;
 			
@@ -43,23 +48,9 @@ class Kohana_ORM_REST extends Model
 			
 			for ($i = 0; $i <= $count; $i++)
 			{
-				if ($key)
-				{
-					$key .= '_';
-				}
-				else
-				{
-					$key .= $var;
-				}
+				$key .= $key ? '_' : $var;
 				
-				if ($pluralize)
-				{
-					$key .= Inflector::plural($segments[$i]);
-				}
-				else
-				{
-					$key .= $segments[$i];
-				}
+				$key .= $pluralize ? Inflector::plural($segments[$i]) : $segments[$i];
 			}
 			
 			$key .= '_id';
