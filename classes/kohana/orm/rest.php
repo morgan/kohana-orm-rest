@@ -233,6 +233,14 @@ class Kohana_ORM_REST extends Model
 	protected $_loaded = FALSE;
 	
 	/**
+	 * Validation Errors
+	 * 
+	 * @access	protected
+	 * @var		array
+	 */
+	protected $_errors = array();
+	
+	/**
 	 * Connection
 	 * 
 	 * @access	protected
@@ -387,7 +395,7 @@ class Kohana_ORM_REST extends Model
 	 */
 	public function clear()
 	{
-		$this->_object = $this->_params = $this->_related = array();
+		$this->_object = $this->_params = $this->_related = $this->_errors = array();
 		
 		$this->_resource = $this->_connection = NULL;
 		
@@ -652,13 +660,25 @@ class Kohana_ORM_REST extends Model
 	public function create()
 	{
 		if ($this->_loaded)
-			throw new Kohana_Exception('Can not create when object loaded.');
+			throw new Kohana_Exception('Resource already loaded. Unable to create.');
 
-		$response = $this->connection()->execute($this->_prep_uri(), $this->_method_create, $this->_query, $this->_object, $this->_headers);
+		$response = $this->connection()->execute
+		(
+			$this->_prep_uri(),
+			$this->_method_create,
+			$this->_query,
+			$this->_object, 
+			$this->_headers
+		);
 		
 		if ( ! $response->loaded())
+		{
+			if ($response->status() == 400)
+				throw new Validation_Exception($this->_validation_errors($response->as_array()));
+
 			throw new Kohana_Exception('Failed creating resource. HTTP response status code :code.',
 				array(':code' => $response->status()));
+		}
 		
 		$this->_loaded = TRUE;
 
@@ -678,11 +698,23 @@ class Kohana_ORM_REST extends Model
 		if ( ! isset($this->_object[$this->_primary_id]))
 			throw new Kohana_Exception('Expecting object to have set id.');
 
-		$response = $this->connection()->execute($this->_prep_uri() . '/' . $this->_object[$this->_primary_id], $this->_method_update, $this->_query, $this->_object, $this->_headers);
+		$response = $this->connection()->execute
+		(
+			$this->_prep_uri() . '/' . $this->_object[$this->_primary_id],
+			$this->_method_update,
+			$this->_query,
+			$this->_object,
+			$this->_headers
+		);
 	
 		if ( ! $response->loaded())
+		{
+			if ($response->status() == 400)
+				throw new Validation_Exception($this->_validation_errors($response->as_array()));
+
 			throw new Kohana_Exception('Failed updating resource. HTTP response status code :code.',
 				array(':code' => $response->status()));
+		}
 		
 		$this->_loaded = TRUE;
 
@@ -899,5 +931,24 @@ class Kohana_ORM_REST extends Model
 		}
 		
 		return FALSE;
+	}	
+	
+	/**
+	 * Create Validation object and add errors
+	 * 
+	 * @access	protected
+	 * @param	array
+	 * @return	Validation
+	 */
+	protected function _validation_errors(array $errors)
+	{
+		$validation = Validation::factory(array());
+
+		foreach ($errors as $key => $value)
+		{
+			$validation->error($key, $value);
+		}
+		
+		return $validation;
 	}	
 }
