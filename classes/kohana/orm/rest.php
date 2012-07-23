@@ -348,7 +348,9 @@ class Kohana_ORM_REST extends Model
 		
 		if ($id)
 		{
-			$this->set($this->_primary_id, $id);
+			$this
+				->set($this->_primary_id, $id)
+				->find();
 		}		
 	}
 	
@@ -594,7 +596,8 @@ class Kohana_ORM_REST extends Model
 			$this->_loaded = TRUE;
 		}
 		else if ($response->code() !== 404)
-			throw new Kohana_Exception('Could not successfully make request in :class class with code :code.', array(':class' => get_class($this), ':code' => $response->code()));
+			throw new Kohana_Exception('Failed making request in :class class with code :code.', 
+				array(':class' => get_class($this), ':code' => $response->code()));
 		
 		return $this;
 	}
