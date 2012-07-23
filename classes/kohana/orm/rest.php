@@ -681,7 +681,8 @@ class Kohana_ORM_REST extends Model
 		$response = $this->connection()->execute($this->_prep_uri() . '/' . $this->_object[$this->_primary_id], $this->_method_update, $this->_query, $this->_object, $this->_headers);
 	
 		if ( ! $response->loaded())
-			throw new Kohana_Exception('Failed updating resource with code :code.', array('code' => $response->code()));
+			throw new Kohana_Exception('Failed creating resource. HTTP response status code :code.',
+				array(':code' => $response->status()));
 		
 		$this->_loaded = TRUE;
 
