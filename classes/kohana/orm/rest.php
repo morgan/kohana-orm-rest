@@ -744,6 +744,28 @@ class Kohana_ORM_REST extends Model
 	}
 	
 	/**
+	 * Rules
+	 * 
+	 * @access	public
+	 * @return	array
+	 */
+	public function rules()
+	{
+		return array();
+	}
+	
+	/**
+	 * Labels
+	 * 
+	 * @access	public
+	 * @return	array
+	 */
+	public function labels()
+	{
+		return array();
+	}	
+	
+	/**
 	 * Set property
 	 * 
 	 * @access	public
