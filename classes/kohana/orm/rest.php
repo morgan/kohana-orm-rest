@@ -621,8 +621,8 @@ class Kohana_ORM_REST extends Model
 		{
 			// If "self::$_path_rows" set, attempt to retrieve key from array using dot notation. Otherwise, simply use root.
 			$rows = ($this->_path_rows) ? Arr::path($response->as_array(), $this->_path_rows, FALSE) : $response->as_array();
-			
-			if ($rows)
+
+			if (is_array($rows))
 			{
 				foreach ($rows as $row)
 				{
@@ -673,7 +673,7 @@ class Kohana_ORM_REST extends Model
 			$this->_object, 
 			$this->_headers
 		);
-		
+
 		if ( ! $response->loaded())
 		{
 			if ($response->status() == 400)
