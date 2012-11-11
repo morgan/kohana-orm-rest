@@ -159,4 +159,15 @@ class Kohana_ORM_REST_Result implements Iterator, Countable
 	{
 		return count($this->_data);
 	}
+
+	/**
+	 * Count total
+	 * 
+	 * @access	public
+	 * @return	int
+	 */
+    public function count_total()
+    {
+        return $this->_response['count_total'];
+    }
 }
