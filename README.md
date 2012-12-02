@@ -7,6 +7,10 @@ An ORM for REST services within Kohana. Uses Dispatch for connection handling.
 Recommend starting out with ORM-REST documentation using the User Guide module or available 
 online at http://dev.morgan.ly/kohana/v3.2/guide/orm-rest/.
 
+## Dependency
+
+[Dispatch](https://github.com/morgan/kohana-dispatch)
+
 ## Learning & References
 
 - User Guide
@@ -15,4 +19,4 @@ online at http://dev.morgan.ly/kohana/v3.2/guide/orm-rest/.
 
 ## Version 0.1.0
 
-This is release version 0.1.0 of [ORM-REST](https://github.com/michealmorgan/kohana-orm-rest).
+This is release version 0.1.0 of [ORM-REST](https://github.com/morgan/kohana-orm-rest).
