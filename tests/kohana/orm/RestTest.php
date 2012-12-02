@@ -6,7 +6,7 @@
  * @group		orm-rest
  * @category	Tests
  * @author		Micheal Morgan <micheal@morgan.ly>
- * @copyright	(c) 2011 Micheal Morgan
+ * @copyright	(c) 2011-2012 Micheal Morgan
  * @license		MIT
  */
 class Kohana_ORM_RestTest extends Unittest_TestCase
@@ -165,7 +165,7 @@ class Kohana_ORM_RestTest extends Unittest_TestCase
 		$this->assertFalse($orm->loaded());
 		
 		$this->assertEmpty($orm->as_array(), 'After delete, object should be cleared and data set empty.');
-	}	
+	}
 	
 	/**
 	 * Factory pattern for ORM Dispatch

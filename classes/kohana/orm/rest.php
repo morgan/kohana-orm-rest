@@ -12,7 +12,7 @@
  * @todo		Refactor detection of unset parameters (I.E. "/:")
  * @package		ORM-REST
  * @author		Micheal Morgan <micheal@morgan.ly>
- * @copyright	(c) 2012 Micheal Morgan
+ * @copyright	(c) 2011-2012 Micheal Morgan
  * @license		MIT
  */
 class Kohana_ORM_REST extends Model
@@ -89,7 +89,7 @@ class Kohana_ORM_REST extends Model
 	protected $_connection_name;
 	
 	/**
-	 * If not defined, ORM_REST::hash is used to generate the resource using the class name along 
+	 * If not defined, `ORM_REST::hash` is used to generate the resource using the class name along 
 	 * with conventions for generating param keys. If the default conventions don't match the 
 	 * remote service, this property can be defined within the individual model.
 	 * 
@@ -298,7 +298,7 @@ class Kohana_ORM_REST extends Model
 	 * 
 	 * 	// To set param ":forums_id", call:
 	 * 	$this->param('forums_id', 1);
-
+	 *
 	 * @access	protected
 	 * @var		string
 	 */
@@ -611,11 +611,11 @@ class Kohana_ORM_REST extends Model
 	public function find_all()
 	{
 		if ($this->_loaded)
-			throw new Kohana_Exception('Object already loaded. To reuse object call "clear()".');	
+			throw new Kohana_Exception('Object already loaded. To reuse object call "clear()".');
 
 		$response = $this->connection()->execute($this->_prep_uri(), Request::GET, $this->_query, array(), $this->_headers);
 
-		$result = ORM_REST_Result::factory($response, $this->_class_name);		
+		$result = ORM_REST_Result::factory($response, $this->_class_name);
 		
 		if ($response->loaded())
 		{
