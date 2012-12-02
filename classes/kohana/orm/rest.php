@@ -124,7 +124,7 @@ class Kohana_ORM_REST extends Model
 	 * @access	protected
 	 * @var		array
 	 */
-	protected $_belongs_to = array();	
+	protected $_belongs_to = array();
 	
 	/**
 	 * Has one
@@ -557,7 +557,7 @@ class Kohana_ORM_REST extends Model
 			return $this->_related[$key];
 
 		if (isset($this->_belongs_to[$key]))
-			return $this->_related[$key] = $this->_belongs_to($key);			
+			return $this->_related[$key] = $this->_belongs_to($key);
 			
 		if (isset($this->_has_one[$key]))
 			return $this->_related[$key] = $this->_has_one($key);
@@ -864,13 +864,13 @@ class Kohana_ORM_REST extends Model
 		if ($config['resource'])
 		{
 			$model->resource($config['resource']);
-		}		
+		}
 		
 		// Retrieve from properties
 		foreach ($config['foreign_key'] as $key => $name)
 		{
 			$model->param($name, $this->get($key));
-		}			
+		}
 		
 		// Retrieve from parameters
 		foreach ($config['parameters'] as $local => $remote)

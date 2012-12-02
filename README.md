@@ -9,7 +9,7 @@ online at http://dev.morgan.ly/kohana/v3.2/guide/orm-rest/.
 
 ## Dependency
 
-[Dispatch](https://github.com/morgan/kohana-dispatch)
+[Dispatch](https://github.com/morgan/kohana-dispatch) - Used for organizing API connections.
 
 ## Learning & References
 
