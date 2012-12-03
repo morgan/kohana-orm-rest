@@ -1,2 +1,4 @@
 ## [ORM-REST]()
- - [Getting Started](start)
+ - [The Basics](basics)
+ - [Relationships](relationships)
+ - [Conventions](conventions)
