@@ -43,7 +43,7 @@ connection by default which can be changed by setting the `_connection_name` pro
 
 	// Or using where
 	$member = ORM::factory('member')
-		->where('member', 1)
+		->where('id', 1)
 		->find();
 
 ## Create
