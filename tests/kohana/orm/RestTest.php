@@ -175,7 +175,13 @@ class Kohana_ORM_RestTest extends Unittest_TestCase
 	 */
 	protected function _factory()
 	{
-		return Model::factory('orm_rest_test')
-			->connection(Dispatch_Connection::factory(Kohana_DispatchTest::config()));
+		$dispatch_connection = Dispatch_Connection::factory(array
+		(
+			'url'			=> URL::site(),
+			'namespace'		=> 'dispatch',
+			'extension' 	=> 'json'
+		));
+
+		return Model::factory('orm_rest_test')->connection($dispatch_connection);
 	}
 }
