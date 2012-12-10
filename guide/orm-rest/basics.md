@@ -16,14 +16,14 @@ convert to the URI of `person/:person/human`. This particular resource would req
 `:person` to be specified prior to being used (more on this later in the guide). You can override 
 the default URI path by specifying the following property: 
 
-	protected $_uri = 'path/to/resource';
+	protected $_resource = 'path/to/resource';
 	
 ## Connection
 	
 Name of `Dispatch_Connection` to use for this model. If not defined, 
 `Dispatch_Connection::instance()` is called.
 	
-	protected $_connection = 'name_of_connection';
+	protected $_connection_name = 'name_of_connection';
 	
 ## Primary key
 

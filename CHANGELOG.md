@@ -1,7 +1,8 @@
-# 0.2.0 - 12/09/2012
+# 0.2.0 - 12/10/2012
 
 - Upgraded to support Kohana 3.3
 - Renamed class files and directories to support PSR-0
+- Added additional user guide documentation
 - All tests pass "OK (8 tests, 17 assertions)"
 
 # 0.1.0 - 12/02/2012
