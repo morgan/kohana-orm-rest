@@ -47,8 +47,8 @@ class Kohana_ORM_RestTest extends Unittest_TestCase
      * Tests class to resource pattern
      * 
 	 * @dataProvider	provider_hash
-     * @access	public
-     * @return	void
+     * @access			public
+     * @return			void
      */
     public function test_hash($set, $expected)
     {
@@ -58,8 +58,8 @@ class Kohana_ORM_RestTest extends Unittest_TestCase
 	/**
 	 * Tests request
 	 * 
-	 * @access			public
-	 * @return			void
+	 * @access	public
+	 * @return	void
 	 */	
 	public function test_find()
 	{
@@ -69,13 +69,13 @@ class Kohana_ORM_RestTest extends Unittest_TestCase
 		
 		$this->assertTrue($orm->loaded(), 'Tests model is loaded.');
 		
-		$this->assertSame($orm->label, 'Test 1');	
+		$this->assertSame($orm->label, 'Test 1');
 
 		// Set null value
 		$orm->label = NULL;
 		
 		// Test null value property
-		$this->assertSame($orm->label, NULL);	
+		$this->assertSame($orm->label, NULL);
 	}
 	
 	/**
@@ -87,7 +87,7 @@ class Kohana_ORM_RestTest extends Unittest_TestCase
 	public function test_find_all()
 	{
 		// Sample data REST API is using
-		$model = Model::factory('dispatch_test');
+		$model = Model::factory('Dispatch_Test');
 		
 		// Dispatch ORM
 		$orm = $this->_factory();
@@ -121,15 +121,14 @@ class Kohana_ORM_RestTest extends Unittest_TestCase
 	 */
 	public function test_create()
 	{
-		$model = Model::factory('dispatch_test');
+		$model = Model::factory('Dispatch_Test');
 		
 		$data = $model->get();
 		
 		$next_id = count($data) + 1;
 		
-		$orm = $this->_factory()
-			->save();
-			
+		$orm = $this->_factory()->save();
+		
 		$this->assertTrue($orm->loaded());
 		
 		$this->assertSame($next_id, $orm->id, 'ORM should match model next id.');
@@ -182,6 +181,6 @@ class Kohana_ORM_RestTest extends Unittest_TestCase
 			'extension' 	=> 'json'
 		));
 
-		return Model::factory('orm_rest_test')->connection($dispatch_connection);
+		return Model::factory('ORM_REST_Test')->connection($dispatch_connection);
 	}
 }
