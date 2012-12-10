@@ -198,7 +198,7 @@ class Kohana_ORM_REST extends Model
 	 * @access	protected
 	 * @var		array
 	 */
-	protected $_query = array();	
+	protected $_query = array();
 	
 	/**
 	 * Headers
@@ -270,7 +270,7 @@ class Kohana_ORM_REST extends Model
 	 * @access	protected
 	 * @var		string
 	 */
-	protected $_method_create = Request::POST;	
+	protected $_method_create = Request::POST;
 	
 	/**
 	 * Method name used during updating
@@ -286,7 +286,7 @@ class Kohana_ORM_REST extends Model
 	 * @access	protected
 	 * @var		string
 	 */
-	protected $_method_delete = Request::DELETE;	
+	protected $_method_delete = Request::DELETE;
 
 	/**
 	 * Symbol used to identify variable within the resource name when params are being set. 
@@ -351,7 +351,7 @@ class Kohana_ORM_REST extends Model
 			$this
 				->set($this->_primary_id, $id)
 				->find();
-		}		
+		}
 	}
 	
 	/**
@@ -401,7 +401,7 @@ class Kohana_ORM_REST extends Model
 		
 		$this->_resource = $this->_connection = NULL;
 		
-		$this->_loaded = FALSE;		
+		$this->_loaded = FALSE;
 		
 		return $this;
 	}
@@ -454,7 +454,7 @@ class Kohana_ORM_REST extends Model
 			$key = implode('_', $key);
 		}	
 			
-		$key = ':' . ltrim($key, ':');	
+		$key = ':' . ltrim($key, ':');
 			
 		if ($value === NULL)
 		{
@@ -510,7 +510,7 @@ class Kohana_ORM_REST extends Model
 		{
 			$this->_headers = $key;
 		}
-			
+		
 		$this->_headers[$key] = $value;
 		
 		return $this;
@@ -549,16 +549,16 @@ class Kohana_ORM_REST extends Model
 	{
 		if ($key === NULL)
 			return $this->_object;
-			
+		
 		if (array_key_exists($key, $this->_object))
 			return $this->_object[$key];
-			
-		if (isset($this->_related[$key]))	
+		
+		if (isset($this->_related[$key]))
 			return $this->_related[$key];
 
 		if (isset($this->_belongs_to[$key]))
 			return $this->_related[$key] = $this->_belongs_to($key);
-			
+		
 		if (isset($this->_has_one[$key]))
 			return $this->_related[$key] = $this->_has_one($key);
 		
@@ -722,7 +722,7 @@ class Kohana_ORM_REST extends Model
 		$this->_loaded = TRUE;
 
 		$this->set($response->as_array());
-			
+		
 		return $this;
 	}
 	
@@ -737,12 +737,19 @@ class Kohana_ORM_REST extends Model
 		if ( ! isset($this->_object[$this->_primary_id]))
 			throw new Kohana_Exception('Expecting object to have set id.');
 
-		$response = $this->connection()->execute($this->_prep_uri() . '/' . $this->_object[$this->_primary_id], $this->_method_delete, $this->_query, $this->_object, $this->_headers);
-				
+		$response = $this->connection()->execute
+		(
+			$this->_prep_uri() . '/' . $this->_object[$this->_primary_id], 
+			$this->_method_delete, 
+			$this->_query, 
+			$this->_object, 
+			$this->_headers
+		);
+		
 		if ( ! $response->loaded())
 			throw new Kohana_Exception('Failed deleting resource. HTTP response status code :code.',
-				array(':code' => $response->status()));			
-			
+				array(':code' => $response->status()));
+		
 		return $this->clear();
 	}
 	
@@ -932,7 +939,7 @@ class Kohana_ORM_REST extends Model
 				throw new Kohana_Exception('Could not load :class class because :count parameters have not been set.', array(':class' => get_class($this), ':count' => $count_params));		
 
 			return $uri;
-		}	
+		}
 		
 		return $this->resource();
 	}
@@ -975,5 +982,5 @@ class Kohana_ORM_REST extends Model
 		}
 		
 		return $validation;
-	}	
+	}
 }
