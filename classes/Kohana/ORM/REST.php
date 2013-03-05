@@ -595,9 +595,9 @@ class Kohana_ORM_REST extends Model
 			
 			$this->_loaded = TRUE;
 		}
-		else if ($response->code() !== 404)
+		else if ($response->status() !== 404)
 			throw new Kohana_Exception('Failed making request in :class class with code :code.', 
-				array(':class' => get_class($this), ':code' => $response->code()));
+				array(':class' => get_class($this), ':code' => $response->status()));
 		
 		return $this;
 	}
