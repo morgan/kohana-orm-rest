@@ -1,11 +1,14 @@
+:warning: **Notice**: The Kohana Framework announced official retirement on 07/01/2017. Therefore, this repository is no longer maintained.
+
+----
+
 # ORM-REST Module
 
 An ORM for REST services within Kohana. Uses Dispatch for connection handling.
 
 ## Getting Started
 
-Recommend starting out with ORM-REST documentation using the User Guide module or available 
-online at http://dev.morgan.ly/kohana/v3.3/guide/orm-rest/.
+Recommend starting out with ORM-REST documentation using the User Guide module.
 
 ## Dependency
 
